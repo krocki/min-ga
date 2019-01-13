@@ -1,8 +1,8 @@
-"""
-    krocki @ 1/12/19
-    This is supposed to illustrate how genetic algorithm (GA) works
-    We want the GA to guess our secret word
-"""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*
+# krocki @ 1/12/19
+# This is supposed to illustrate how genetic algorithm (GA) works
+# We want the GA to guess our secret word
 
 import random
 import argparse
@@ -57,12 +57,12 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='')
   parser.add_argument('--popsize', type=int, default=1000, help='population size')
   # this is our secret word
-  parser.add_argument('--target', type=str, default="supercalifragilisticexpialidocious", help='target text')
+  parser.add_argument('--target', type=str, default="Secret password 123456", help='target text')
   parser.add_argument('--max_generations', type=int, default=500, help='maximum number of generations allowed')
   opt = parser.parse_args()
 
   # this is just a list of chars allowed
-  alphabet='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!'
+  alphabet='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;?@[\\]^_`{|}~ \t\n\r\x0b\x0c'
   crossover_prob=0.9 # probability of 2 parents breeding
   mutate_prob=0.1 # probability of random mutation
 
