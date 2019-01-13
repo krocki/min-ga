@@ -57,7 +57,7 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='')
   parser.add_argument('--popsize', type=int, default=1000, help='population size')
   # this is our secret word
-  parser.add_argument('--target', type=str, default="radioimmunoelectrophoresis", help='target text')
+  parser.add_argument('--target', type=str, default="supercalifragilisticexpialidocious", help='target text')
   parser.add_argument('--max_generations', type=int, default=500, help='maximum number of generations allowed')
   opt = parser.parse_args()
 
