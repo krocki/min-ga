@@ -90,7 +90,8 @@ if __name__ == "__main__":
 
       new_population.append(p); new_population.append(q)
 
-    print("[generation {:3d}] (max {:2d}, med {:2d}, min {:2d}) {:}".format(generation, sorted_pop[0][1], sorted_pop[len(sorted_pop)//2][1], sorted_pop[-1][1], sorted_pop[0][0]))
+    #print("[generation {:3d}] (max {:2d}, med {:2d}, min {:2d}) {:}".format(generation, sorted_pop[0][1], sorted_pop[len(sorted_pop)//2][1], sorted_pop[-1][1], sorted_pop[0][0]))
+    print("[generation {:3d} - fitness {:3d}] {:}".format(generation, sorted_pop[0][1], sorted_pop[0][0]))
 
     # we found a solution
     if sorted_pop[0][0] == opt.target: break
