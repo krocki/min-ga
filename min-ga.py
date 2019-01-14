@@ -57,7 +57,7 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='')
   parser.add_argument('--popsize', type=int, default=1000, help='population size')
   # this is our secret word
-  parser.add_argument('--target', type=str, default="Secret password 123456", help='target text')
+  parser.add_argument('--target', type=str, default="Supercalifragilisticexpialidocious", help='target text')
   parser.add_argument('--max_generations', type=int, default=500, help='maximum number of generations allowed')
   opt = parser.parse_args()
 
@@ -91,7 +91,7 @@ if __name__ == "__main__":
       new_population.append(p); new_population.append(q)
 
     #print("[generation {:3d}] (max {:2d}, med {:2d}, min {:2d}) {:}".format(generation, sorted_pop[0][1], sorted_pop[len(sorted_pop)//2][1], sorted_pop[-1][1], sorted_pop[0][0]))
-    print("[generation {:3d} - fitness {:3d}] {:}".format(generation, sorted_pop[0][1], sorted_pop[0][0]))
+    print("generation {:3d}\nfitness {:3d}\n{:}".format(generation, sorted_pop[0][1], sorted_pop[0][0]))
 
     # we found a solution
     if sorted_pop[0][0] == opt.target: break
