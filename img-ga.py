@@ -1,13 +1,12 @@
 #!/usr/bin/env python
-import numpy as np
 # -*- coding: utf-8 -*
 # krocki @ 1/12/19
 # This is supposed to illustrate how genetic algorithm (GA) works
-# We want the GA to guess our secret image
 
 import random
 import argparse
 import numpy as np
+from scipy import ndimage
 from array2gif import write_gif
 
 def random_chromo(length, chars): return ''.join(random.choice(chars) for i in range(length))
@@ -54,15 +53,20 @@ def crossover(x,y): # x and y are parents
    p,q = x[:i] + y[i:j] + x[j:], y[:i] + x[i:j] + y[j:]
    return p, q # 2 children
 
+imgs=[]
+
 if __name__ == "__main__":
 
   ### parse args
   parser = argparse.ArgumentParser(description='')
-  parser.add_argument('--popsize', type=int, default=16, help='population size')
-  # this is our secret word
-  parser.add_argument('--target', type=str, default="0000000001100110111111111111111111111111011111100011110000011000", help='target text')
+  parser.add_argument('--popsize', type=int, default=1000, help='population size')
+
+  parser.add_argument('--target', type=str, default="berry.gif", help='target img')
   parser.add_argument('--max_generations', type=int, default=500, help='maximum number of generations allowed')
   opt = parser.parse_args()
+
+  im_array = (ndimage.imread(opt.target)//128).transpose(2,0,1)
+  target = "".join([str(x) for x in im_array.flatten()])
 
   # this is just a list of chars allowed
   alphabet='01'
@@ -70,13 +74,12 @@ if __name__ == "__main__":
   mutate_prob=0.1 # probability of random mutation
 
   # initially we create a pool of random guesses of our 'secret' word
-  population,generation=initial_population(len(opt.target), alphabet, opt.popsize),0
+  population,generation=initial_population(len(target), alphabet, opt.popsize),0
   # the main loop
-  imgs=[]
   while generation < opt.max_generations:
 
     # evalulate the population based on similarity to the secret word
-    pop_fitness=[(i,fitness(i,opt.target)) for i in population]
+    pop_fitness=[(i,fitness(i,target)) for i in population]
     sorted_pop = sorted(pop_fitness, key=lambda x: -x[1])
 
     new_population=[]
@@ -94,17 +97,14 @@ if __name__ == "__main__":
 
       new_population.append(p); new_population.append(q)
 
-    #print("generation {:3d}\nfitness {:3d}\n{:}".format(generation, sorted_pop[0][1], sorted_pop[0][0]))
+    print("generation {:3d}\nfitness {:3d}\n".format(generation, sorted_pop[0][1]))
 
     # we found a solution
-    if sorted_pop[0][0] == opt.target: break
+    if sorted_pop[0][0] == target: break
 
     population=new_population # parents die, children take over
-    full=np.zeros((3,8*4,8*4))
-    for i in range(16):
-      fr=np.array(list(sorted_pop[i][0] * 3)).reshape(3,8,8).astype('float') * 255.0
-      x,y=i//4,i%4
-      full[:,8*x:8*x+8,8*y:8*y+8] = fr[:,:,:]
-    imgs.append(full)
+    frame = np.array([255 if x=='1' else 0 for x in list(sorted_pop[0][0])]).reshape(3,im_array.shape[1],im_array.shape[2])
+    imgs.append(frame)
     generation += 1
-  write_gif(imgs, '{}.gif'.format('ga.gif'),fps=5)
+
+  write_gif(imgs, 'img-ga', fps=25)
