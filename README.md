@@ -5,10 +5,10 @@ Genetic Algorithm - Minimum implementation in Python
 
 `python min-ga.py`
 
-<img src="min-ga.gif" width="200"/>
+<img src="min-ga.gif"/>
 
 # GA can also guess our secret image!
 
 `python img-ga.py`
 
-<img src="img-ga.gif" width="200"/>
+<img src="img-ga.gif"/>
